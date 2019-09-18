@@ -31,7 +31,7 @@ public class SoundToVisual extends JFrame {
 	protected boolean running;
     ByteArrayOutputStream out;
     MyPanel draw_field = new MyPanel();
-    int change = 0;
+    // state indicators 
     boolean reached_veryloud = false;
     boolean stage1 = false;
     boolean reached_veryloud2 = false;
@@ -40,6 +40,8 @@ public class SoundToVisual extends JFrame {
 	
 	public SoundToVisual()
 	{
+		
+		// creating the UI
 		super("C.RE.TI.VITY. ALPHA");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
         Container content = getContentPane();
@@ -55,6 +57,7 @@ public class SoundToVisual extends JFrame {
 		stop.setEnabled(true);
 		
 		
+		// adding an action to a button
 		ActionListener captureListener = 
 	            new ActionListener() 
 		{
@@ -83,6 +86,7 @@ public class SoundToVisual extends JFrame {
 		
 	}
 	
+	// this function captures the audio
 	private void captureAudio() {
         try {
           final AudioFormat format = getFormat();
@@ -114,7 +118,6 @@ public class SoundToVisual extends JFrame {
                 System.err.println("I/O problems: " + e);
                 System.exit(-1);
               } catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
             }
@@ -127,6 +130,7 @@ public class SoundToVisual extends JFrame {
         }
       }
 	
+	 // set the format of the audio captured (dependent on the type of microphone)
 	 private AudioFormat getFormat() {
 	        float sampleRate = 18000;
 	        int sampleSizeInBits = 8;
@@ -137,6 +141,9 @@ public class SoundToVisual extends JFrame {
 	          sampleSizeInBits, channels, signed, bigEndian);
 	      }
 	 
+	 // calculates the "volume/loudness" of the audio
+	 // the more quite = the more negative the value is
+	 // more noise = more positive value (less negative)
 	 private int volume(byte buffer[], int size)
      {
    	  int sum = 0;
@@ -147,6 +154,8 @@ public class SoundToVisual extends JFrame {
    	  	return sum/size;
      }
 	 
+	 
+	 // The "creative", Markov inspired, function. Depending on how loud the user gets, different things will be displayed!
 	 private void Markov(int sum) throws InterruptedException
 	 {
 		
@@ -160,7 +169,7 @@ public class SoundToVisual extends JFrame {
 		 float g = rand.nextFloat();
 		 float b = rand.nextFloat();
 
-		 
+		 // will get stuck at these 2 states at the end until the program restarted 
 		 if (goodluck)
 		 {
 			 draw_field.removeAll();
@@ -181,6 +190,7 @@ public class SoundToVisual extends JFrame {
 			 draw_field.add(label);
 			 draw_field.validate();
 		 }
+		 // 50/50 that you will get lucky or not 
 		 else if (stage1 && sum > -5)
 		 {
 			 if(luck == 1)
@@ -221,13 +231,13 @@ public class SoundToVisual extends JFrame {
 			 draw_field.add(label);
 			 draw_field.validate();
 			 draw_field.repaint();
-			 TimeUnit.MILLISECONDS.sleep(1000);
+			 TimeUnit.MILLISECONDS.sleep(1500);
 			 label.setText("I dare you to get loud one more time!");
 			 label.setFont(new Font("Serif", Font.PLAIN, 30));
 			 draw_field.add(label);
 			 draw_field.validate();
 			 draw_field.repaint();
-			 TimeUnit.MILLISECONDS.sleep(1000);
+			 TimeUnit.MILLISECONDS.sleep(1500);
 			 stage1 = true;
 			 reached_veryloud = false;
 			 
@@ -272,10 +282,7 @@ public class SoundToVisual extends JFrame {
 			 draw_field.setBackground(Color.RED);
 		 }
 		 
-		 
-		 
-		 
-		 
+		 // Stopped 
 		 if (!running)
 		 {
 			 draw_field.removeAll();
@@ -286,7 +293,6 @@ public class SoundToVisual extends JFrame {
 	
 	public static void main(String args[]) {
         JFrame frame = new SoundToVisual();
-        frame.setBackground(Color.GREEN);
         frame.pack();
         frame.show();
      

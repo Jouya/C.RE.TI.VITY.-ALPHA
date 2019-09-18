@@ -108,6 +108,7 @@ public class SoundToVisual extends JFrame {
                 while (running) {
                   int count = 
                     line.read(buffer, 0, buffer.length);
+			// Where creativity begins!
                   	Markov(volume(buffer,buffer.length));
                   if (count > 0) {
                     out.write(buffer, 0, count);

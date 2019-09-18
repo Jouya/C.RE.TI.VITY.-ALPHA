@@ -2,6 +2,9 @@
 C.RE.TI.VITY. ALPHA is a program that uses audio data that is produced by the user to display different visuals at different states/audio levels.
 
 NOTE: For maximum quality, please run C.RE.TI.VITY. ALPHA in a quiet environment and make continuous noises rather short ones.
+red = quiet
+yellow = some noise
+green = relatively loud
 
 This project is meaningful to me because I have always wanted to incorporate sound in some shape or form into one of my coding projects. I have always wanted to create my own custom volume meter, and this project definitely gave me a snippet of how that might look like. There is also a gaming element within this project, which as a gamer myself, I enjoy a bit :)
 
